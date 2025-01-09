@@ -270,7 +270,7 @@
         NSInteger i = leadingPart.count - 1;
         NSInteger j = 0;
 
-        while (i >= 0 && j < trailingPart.count && [leadingPart[i] isEqual:trailingPart[j]]) {
+        do {
             // We need this cicle because we want to remove subsequences with the same node from `leadingPart`.
             // Example
             //   leadingPart     = [a, b, c, c, d]
@@ -281,7 +281,7 @@
             } while (i >= 0 && [leadingPart[i] isEqual:trailingPart[j]]);
 
             ++j;
-        }
+        } while (i >= 0 && j < trailingPart.count && [leadingPart[i] isEqual:trailingPart[j]]);
 
         leadingSuffixToRemove = leadingPart.count - 1 - i;
         trailingPrefixToRemove = j - 1;
