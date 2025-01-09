@@ -259,6 +259,8 @@
 - (NSArray<id<LHNode>> *)pathByConcatinatingPathToActiveNode:(NSArray<id<LHNode>> *)leadingPart
                                       withPathFromActiveNode:(NSArray<id<LHNode>> *)trailingPart
                                          removingCommonNodes:(BOOL)removingCommonNodes {
+    // The active node is at the end of `leadingPart` (current path) and at the beginning of `trailingPart` (calculated
+    // path from the active node).
     LHAssert(leadingPart.lastObject == trailingPart.firstObject);
 
     NSInteger leadingSuffixToRemove;
