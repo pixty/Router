@@ -126,8 +126,6 @@
 		01DBF2FA1C4EFEB00034783C /* LHDriverFeedbackUpdateTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C6F9021BBA063800A13C1E /* LHDriverFeedbackUpdateTask.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		01DBF2FC1C4EFEB00034783C /* LHDriverChannelImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 01A01AA61BA8E9FB00608274 /* LHDriverChannelImpl.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		01DBF2FD1C4EFEB00034783C /* LHUpdateBusImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 012A95321C4EF2E9000A4ECB /* LHUpdateBusImpl.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		0F0DD0641E30F8EA005C6C47 /* NSArray+LHUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F0DD0621E30F8EA005C6C47 /* NSArray+LHUtils.h */; };
-		0F0DD0651E30F8EA005C6C47 /* NSArray+LHUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0DD0631E30F8EA005C6C47 /* NSArray+LHUtils.m */; };
 		0F27F8101DCE4366004F07DF /* NSMapTable+LHUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F27F80E1DCE4366004F07DF /* NSMapTable+LHUtils.h */; };
 		0F27F8111DCE4366004F07DF /* NSMapTable+LHUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F27F80F1DCE4366004F07DF /* NSMapTable+LHUtils.m */; };
 		0F27F8121DCE4B98004F07DF /* LHGraph.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F5FC6EA1DCBE158009596D4 /* LHGraph.m */; };
@@ -288,8 +286,6 @@
 		01D57AB21C547557008E4EB5 /* LHTabNodeChildrenState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHTabNodeChildrenState.m; sourceTree = "<group>"; };
 		01E8BB951BC01318000405D2 /* LHManualNodeUpdateTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHManualNodeUpdateTask.h; sourceTree = "<group>"; };
 		01E8BB961BC01318000405D2 /* LHManualNodeUpdateTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHManualNodeUpdateTask.m; sourceTree = "<group>"; };
-		0F0DD0621E30F8EA005C6C47 /* NSArray+LHUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+LHUtils.h"; sourceTree = "<group>"; };
-		0F0DD0631E30F8EA005C6C47 /* NSArray+LHUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+LHUtils.m"; sourceTree = "<group>"; };
 		0F27F80E1DCE4366004F07DF /* NSMapTable+LHUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMapTable+LHUtils.h"; sourceTree = "<group>"; };
 		0F27F80F1DCE4366004F07DF /* NSMapTable+LHUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMapTable+LHUtils.m"; sourceTree = "<group>"; };
 		0F5FC6E91DCBE158009596D4 /* LHGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHGraph.h; sourceTree = "<group>"; };
@@ -473,8 +469,6 @@
 			children = (
 				0F27F80E1DCE4366004F07DF /* NSMapTable+LHUtils.h */,
 				0F27F80F1DCE4366004F07DF /* NSMapTable+LHUtils.m */,
-				0F0DD0621E30F8EA005C6C47 /* NSArray+LHUtils.h */,
-				0F0DD0631E30F8EA005C6C47 /* NSArray+LHUtils.m */,
 				014C9F141C96F94E00D35950 /* LHMacro.h */,
 				7CFC39072C5794FF00144A65 /* LHAssert.h */,
 				7CFC39082C5794FF00144A65 /* LHAssert.m */,
@@ -780,7 +774,6 @@
 				01DBF2EF1C4EFE700034783C /* LHTask.h in Headers */,
 				01DBF2F01C4EFE710034783C /* LHTaskQueue.h in Headers */,
 				019DE7341C971DD900656C15 /* LHRouterDelegate.h in Headers */,
-				0F0DD0641E30F8EA005C6C47 /* NSArray+LHUtils.h in Headers */,
 				01DBF2F11C4EFE710034783C /* LHDescriptionHelpers.h in Headers */,
 				01DBF2F31C4EFEB00034783C /* LHNodeData.h in Headers */,
 				01DBF2F41C4EFEB00034783C /* LHNodeDataStorage.h in Headers */,
@@ -973,7 +966,6 @@
 				015A4F9C1C67A49400F950B3 /* LHModalTransitionData.m in Sources */,
 				012A956F1C4EFD9A000A4ECB /* LHCommandNodeUpdateTask.m in Sources */,
 				012A95701C4EFD9A000A4ECB /* LHManualNodeUpdateTask.m in Sources */,
-				0F0DD0651E30F8EA005C6C47 /* NSArray+LHUtils.m in Sources */,
 				012A95711C4EFD9A000A4ECB /* LHDriverFeedbackUpdateTask.m in Sources */,
 				015A4F8F1C66950E00F950B3 /* LHTransitionStyleRegistry.m in Sources */,
 				012A95731C4EFD9A000A4ECB /* LHDriverChannelImpl.m in Sources */,

@@ -13,7 +13,6 @@
 #import "LHRouteHint.h"
 #import "LHDebugPrintable.h"
 #import "LHDescriptionHelpers.h"
-#import "NSArray+LHUtils.h"
 
 @interface LHStackNode () <LHDebugPrintable>
 
@@ -231,8 +230,11 @@
                                                     target:(LHTarget *)target {
 
     id<LHNode> activeNode = self.childrenState.stack.lastObject;
-    NSAssert(activeNode != nil, @"There should be an active node at this point");
-    
+    if (activeNode == nil) {
+        LHAssertionFailure(@"There should be an active node at this point");
+        return @[];
+    }
+
     if (activeNode == node && target.routeHint.nodes.lastObject == node) {
         return [self.childrenState.stack arrayByAddingObject:node];
     }
@@ -243,35 +245,66 @@
     }
         
     NSArray<id<LHNode>> *graphPath = [graph pathFromNode:activeNode toNode:node visitingNodes:target.routeHint.nodes].array;
-    
-    if (!target.routeHint.bidirectional) {
-        return [self pathByConcatinatingPath:self.childrenState.stack withPath:graphPath];
+    if (graphPath == nil) {
+        return self.childrenState.stack;
     }
-    
-    NSArray<id<LHNode>> *commonSuffix = [self.childrenState.stack lh_commonSuffixWithArray:[graphPath reverseObjectEnumerator].allObjects];
-    if (commonSuffix.count > 1) {
-        NSArray<id<LHNode>> *remainingPart = [graphPath lh_arraySuffixWithLength:graphPath.count - commonSuffix.count];
-        NSArray<id<LHNode>> *path = [self.childrenState.stack subarrayWithRange:NSMakeRange(0, self.childrenState.stack.count - commonSuffix.count + 1)];
-        return [path arrayByAddingObjectsFromArray:remainingPart];
+
+    LHAssert(graphPath.firstObject == activeNode && graphPath.lastObject == node);
+
+    return [self pathByConcatinatingPathToActiveNode:self.childrenState.stack
+                              withPathFromActiveNode:graphPath
+                                 removingCommonNodes:target.routeHint.bidirectional];
+}
+
+- (NSArray<id<LHNode>> *)pathByConcatinatingPathToActiveNode:(NSArray<id<LHNode>> *)leadingPart
+                                      withPathFromActiveNode:(NSArray<id<LHNode>> *)trailingPart
+                                         removingCommonNodes:(BOOL)removingCommonNodes {
+    // The active node is at the end of `leadingPart` (current path) and at the beginning of `trailingPart` (calculated
+    // path from the active node).
+    LHAssert(leadingPart.lastObject == trailingPart.firstObject);
+
+    NSInteger leadingSuffixToRemove;
+    NSInteger trailingPrefixToRemove;
+
+    if (removingCommonNodes) {
+        NSInteger i = leadingPart.count - 1;
+        NSInteger j = 0;
+
+        do {
+            // We need this cicle because we want to remove subsequences with the same node from `leadingPart`.
+            // Example
+            //   leadingPart     = [a, b, c, c, d]
+            //   trailingPart    = [d, c, b]
+            //   expected result = [a, b]
+            do {
+                --i;
+            } while (i >= 0 && [leadingPart[i] isEqual:trailingPart[j]]);
+
+            ++j;
+        } while (i >= 0 && j < trailingPart.count && [leadingPart[i] isEqual:trailingPart[j]]);
+
+        leadingSuffixToRemove = leadingPart.count - 1 - i;
+        trailingPrefixToRemove = j - 1;
     } else {
-        return [self pathByConcatinatingPath:self.childrenState.stack withPath:graphPath];
+        leadingSuffixToRemove = 1;
+        trailingPrefixToRemove = 0;
     }
+
+    leadingPart = [leadingPart subarrayWithRange:(NSRange){
+        .length = leadingPart.count - leadingSuffixToRemove
+    }];
+    trailingPart = [trailingPart subarrayWithRange:(NSRange){
+        .location = trailingPrefixToRemove,
+        .length = trailingPart.count - trailingPrefixToRemove
+    }];
+
+    return [leadingPart arrayByAddingObjectsFromArray:trailingPart];
 }
 
 - (NSArray<id<LHNode>> *)calculatePathFromRootToNode:(id<LHNode>)node
                                              inGraph:(LHGraph<id<LHNode>> *)graph
                                               target:(LHTarget *)target {
     return [graph pathFromNode:graph.rootNode toNode:node visitingNodes:target.routeHint.nodes].array;
-}
-
-- (NSArray<id<LHNode>> *)pathByConcatinatingPath:(NSArray<id<LHNode>> *)first withPath:(NSArray<id<LHNode>> *)second {
-    NSMutableArray<id<LHNode>> *mutablePath = [first mutableCopy];
-    
-    if (first.count > 0 && second.count > 0) {
-        [mutablePath removeLastObject];
-    }
-    [mutablePath addObjectsFromArray:second];
-    return [mutablePath copy];
 }
 
 - (NSArray<id<LHNode>> *)bidirectionalTailFromPath:(NSArray<id<LHNode>> *)path inGraph:(LHGraph *)graph {
